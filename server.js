@@ -1,5 +1,3 @@
-// Server Lokal Sederhana untuk TugasNaila Portal
-// Jalankan dengan: node server.js
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
@@ -48,10 +46,3 @@ const server = http.createServer((req, res) => {
   });
 });
 
-server.listen(PORT, () => {
-  console.log(`\n======================================================`);
-  console.log(`🚀 Portal TugasNaila aktif dan berjalan di:`);
-  console.log(`   👉 http://localhost:${PORT}`);
-  console.log(`======================================================\n`);
-  console.log(`Tekan Ctrl + C di terminal untuk menghentikan server.\n`);
-});
