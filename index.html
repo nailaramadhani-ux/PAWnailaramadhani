@@ -8,24 +8,20 @@
   <meta name="description"
     content="Portal Tugas Kuliah Naila Ramadhani - Pengumpulan dan monitoring tugas kuliah praktis dan responsif.">
 
-  <!-- Google Fonts: Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
     rel="stylesheet">
 
-  <!-- CSS Stylesheet -->
   <link rel="stylesheet" href="styles.css">
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232563eb'><path d='M12 3L1 9l11 6 9-4.91V17h2V9L12 3zm0 12.5L3.5 10.9 12 6.27l8.5 4.63L12 15.5z'/></svg>">
 </head>
 
 <body>
-  <!-- Background Glow Accents -->
   <div class="bg-blur-ambient bg-blur-1" aria-hidden="true"></div>
   <div class="bg-blur-ambient bg-blur-2" aria-hidden="true"></div>
 
-  <!-- Header / Navbar -->
   <header class="navbar-header" id="navbarHeader">
     <div class="navbar-container">
       <!-- Logo & Teks TugasNaila -->
@@ -40,9 +36,7 @@
         <span class="brand-title">TugasNaila</span>
       </a>
 
-      <!-- Navbar Action: Guest vs Admin -->
       <nav class="navbar-actions" id="navbarActions">
-        <!-- Kondisi Tamu / Belum Login -->
         <button type="button" class="btn-pill btn-admin-login" id="btnOpenLoginModal">
           <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
@@ -51,8 +45,7 @@
           </svg>
           <span>Admin Login</span>
         </button>
-
-        <!-- Kondisi Admin (Hidden by default, shown when logged in) -->
+        
         <div class="admin-action-group hidden" id="adminActionGroup">
           <button type="button" class="btn-pill btn-add-task" id="btnOpenAddTaskModal">
             <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
@@ -76,11 +69,9 @@
     </div>
   </header>
 
-  <!-- Main Content Wrapper -->
   <main class="main-layout" id="mainContent">
     <div class="content-container">
 
-      <!-- Card Profile / Biodata -->
       <section class="profile-card-wrapper" aria-label="Profil Mahasiswa">
         <div class="profile-card">
           <div class="profile-avatar-box">
@@ -91,7 +82,6 @@
             <h1 class="profile-name">Naila Ramadhani</h1>
             <p class="profile-sub">NIM: 1247050026 &bull; Kelas: C</p>
           </div>
-          <!-- Admin Status Indicator Pill -->
           <div class="admin-indicator-badge hidden" id="adminBadge">
             <span class="badge-dot"></span>
             <span>Mode Admin Aktif</span>
@@ -99,7 +89,6 @@
         </div>
       </section>
 
-      <!-- Section Kontrol Filter Pills -->
       <section class="filter-section" aria-label="Filter Status Tugas">
         <div class="filter-pills-row">
           <button type="button" class="filter-pill active" data-filter="all" id="filterAll">
@@ -117,14 +106,9 @@
         </div>
       </section>
 
-      <!-- Area Daftar Tugas (Grid & Empty State) -->
       <section class="tasks-area-section" aria-label="Daftar Tugas Kuliah">
-        <!-- Grid Kartu Tugas -->
         <div class="tasks-grid" id="tasksGrid">
 
-
-
-          <!-- Kartu Tugas Pertemuan 2 -->
           <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-4">
@@ -144,30 +128,10 @@
             </a>
           </div>
 
-          <!-- Kartu Pertemuan 3 -->
-          <article class="task-card" data-id="task-seed-3">
-            <div class="task-card-header">
-              <span class="badge-meeting">Pertemuan 3</span>
-              <span class="badge-status pending">
-                <span class="badge-status-dot"></span>
-                <span>Belum Dikerjakan</span>
-              </span>
-            </div>
-            <div class="task-card-body">
-              <h3 class="task-title">Implementasi API &amp; Basis Data Mahasiswa</h3>
-              <p class="task-description">Mengintegrasikan penyimpanan data lokal/API dan manajemen tugas dengan
-                validasi form lengkap.</p>
-            </div>
-            <div class="task-card-footer">
-              <a href="https://drive.google.com" target="_blank" rel="noopener noreferrer" class="btn-open-task">
-                <span>Buka Tugas ↗</span>
-              </a>
-            </div>
-          </article>
+
 
         </div>
 
-        <!-- Empty State (Jika belum ada tugas) -->
         <div class="empty-state-card hidden" id="emptyStateCard">
           <div class="empty-icon-circle">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
@@ -193,20 +157,15 @@
     </div>
   </main>
 
-  <!-- Footer -->
   <footer class="app-footer">
     <div class="footer-container">
       <p class="footer-text">&copy; 2026 Portal Tugas &mdash; Naila Ramadhani</p>
     </div>
   </footer>
 
-  <!-- ======================================================== -->
-  <!-- MODAL 1: LOGIN ADMIN (Persis Spesifikasi Gambar Referensi) -->
-  <!-- ======================================================== -->
   <dialog class="app-dialog" id="loginModal" closedby="any" aria-labelledby="loginTitle">
     <div class="modal-card modal-card-sm">
 
-      <!-- Lock Icon Header -->
       <div class="modal-lock-header">
         <div class="lock-circle-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
@@ -220,7 +179,6 @@
         <p class="modal-subtitle">Silakan masukkan password untuk mengelola tugas.</p>
       </div>
 
-      <!-- Form Login -->
       <form id="loginForm" class="modal-form" novalidate>
         <div class="form-group">
           <div class="input-password-wrapper">
@@ -242,7 +200,6 @@
               </svg>
             </button>
           </div>
-          <!-- Error alert message -->
           <p class="form-error-msg hidden" id="loginErrorMsg">Password salah. Silakan coba lagi.</p>
           <div class="demo-credential-tip">
             <span class="tip-badge">Tips Demo</span>
@@ -264,41 +221,32 @@
     </div>
   </dialog>
 
-  <!-- ======================================================== -->
-  <!-- MODAL 2: TAMBAH TUGAS (Persis Spesifikasi Gambar Referensi) -->
-  <!-- ======================================================== -->
   <dialog class="app-dialog" id="addTaskModal" closedby="any" aria-labelledby="addTaskTitle">
     <div class="modal-card modal-card-md">
 
-      <!-- Modal Header -->
       <div class="modal-header-simple">
         <h2 class="modal-title" id="addTaskTitle">Tambah Tugas</h2>
         <p class="modal-subtitle">Isi data tugas baru di bawah ini.</p>
       </div>
 
-      <!-- Form Tambah Tugas -->
       <form id="addTaskForm" class="modal-form" novalidate>
 
-        <!-- Pertemuan Ke- -->
         <div class="form-group">
           <label for="taskMeeting" class="form-label">Pertemuan Ke-</label>
           <input type="text" id="taskMeeting" class="form-input" placeholder="Contoh: 1" required>
         </div>
 
-        <!-- Judul Tugas -->
         <div class="form-group">
           <label for="taskTitle" class="form-label">Judul Tugas</label>
           <input type="text" id="taskTitle" class="form-input" placeholder="Contoh: Membuat Website" required>
         </div>
 
-        <!-- Deskripsi Singkat -->
         <div class="form-group">
           <label for="taskDesc" class="form-label">Deskripsi Singkat</label>
           <textarea id="taskDesc" class="form-input form-textarea" rows="3" placeholder="Deskripsi tugas..."
             required></textarea>
         </div>
 
-        <!-- Status -->
         <div class="form-group">
           <label for="taskStatus" class="form-label">Status</label>
           <div class="select-wrapper">
@@ -315,7 +263,6 @@
           </div>
         </div>
 
-        <!-- Pilih Metode Pengumpulan -->
         <div class="form-group">
           <label for="taskMethod" class="form-label">Pilih Metode Pengumpulan</label>
           <div class="select-wrapper">
@@ -332,14 +279,11 @@
             </div>
           </div>
         </div>
-
-        <!-- Input Group: Link Tugas (Default: Tampil saat Kirim Link / GitHub) -->
         <div class="form-group" id="linkInputGroup">
           <label for="taskLink" class="form-label" id="taskLinkLabel">Link Tugas</label>
           <input type="url" id="taskLink" class="form-input" placeholder="https://..." required>
         </div>
 
-        <!-- Input Group: Upload Dokumen (Tampil saat memilih Upload File Dokumen) -->
         <div class="form-group hidden" id="fileInputGroup">
           <label class="form-label">Pilih File Dokumen</label>
           <div class="file-upload-dropzone" id="fileDropzone">
@@ -358,7 +302,6 @@
               <span class="upload-text-sub">Format PDF, Word, PPT, ZIP, Gambar (Maks. 5MB)</span>
             </div>
 
-            <!-- Tampilan Info File yang Telah Dipilih -->
             <div class="file-chosen-preview hidden" id="fileChosenPreview">
               <div class="file-preview-left">
                 <div class="file-badge-icon">
@@ -385,7 +328,6 @@
           </div>
         </div>
 
-        <!-- Tombol Bawah: Batal & Simpan Tugas -->
         <div class="modal-form-actions">
           <button type="button" class="btn-action-soft" id="btnCancelAddTask">
             Batal
@@ -400,9 +342,6 @@
     </div>
   </dialog>
 
-  <!-- ======================================================== -->
-  <!-- MODAL 3: KONFIRMASI HAPUS TUGAS                          -->
-  <!-- ======================================================== -->
   <dialog class="app-dialog" id="deleteConfirmModal" closedby="any" aria-labelledby="deleteTitle">
     <div class="modal-card modal-card-sm text-center">
       <div class="delete-icon-circle">
