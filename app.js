@@ -1,17 +1,8 @@
-/**
- * ============================================================================
- * TugasNaila - Portal Tugas Kuliah
- * JavaScript Logic: Authentication, CRUD Tasks, Filter Pills, & LocalStorage
- * ============================================================================
- */
-
 document.addEventListener('DOMContentLoaded', () => {
-  // --- KONSTANTA & KUNCI STORAGE ---
   const STORAGE_KEY_TASKS = 'tugas_naila_tasks_data';
   const STORAGE_KEY_AUTH = 'tugas_naila_is_admin';
   const DEFAULT_ADMIN_PASSWORD = 'admin123';
 
-  // --- DATA AWAL (SEED DATA) ---
   const INITIAL_SEED_TASKS = [
     {
       id: 'task-seed-1',
@@ -48,14 +39,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   ];
 
-  // --- APPLICATION STATE ---
   let tasks = loadTasksFromStorage();
   let isAdmin = sessionStorage.getItem(STORAGE_KEY_AUTH) === 'true';
   let currentFilter = 'all'; // 'all' | 'completed' | 'pending'
   let pendingDeleteTaskId = null;
   let currentUploadedFile = null;
 
-  // --- DOM ELEMENTS ---
   // Navbar
   const btnOpenLoginModal = document.getElementById('btnOpenLoginModal');
   const adminActionGroup = document.getElementById('adminActionGroup');
@@ -120,10 +109,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Toast Container
   const toastContainer = document.getElementById('toastContainer');
 
-  // =========================================================================
-  // STORAGE & DATA HELPERS
-  // =========================================================================
-
   function loadTasksFromStorage() {
     try {
       const data = localStorage.getItem(STORAGE_KEY_TASKS);
@@ -151,7 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (e) {
       console.warn('Gagal membaca localStorage, menggunakan data seed default:', e);
     }
-    // Jika baru pertama kali dibuka, gunakan initial seed
     saveTasksToStorage(INITIAL_SEED_TASKS);
     return [...INITIAL_SEED_TASKS];
   }
@@ -172,9 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
   }
 
-  // =========================================================================
-  // AUTHENTICATION & UI STATE
-  // =========================================================================
 
   function updateAuthUI() {
     if (isAdmin) {
@@ -720,7 +701,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // --- Delete Confirmation Modal Events ---
   btnCancelDelete.addEventListener('click', () => {
     pendingDeleteTaskId = null;
     closeModal(deleteConfirmModal);
@@ -734,7 +714,6 @@ document.addEventListener('DOMContentLoaded', () => {
     closeModal(deleteConfirmModal);
   });
 
-  // --- INIT APPLICATION ---
   updateAuthUI();
   updateMethodInputView();
   renderTasks();
