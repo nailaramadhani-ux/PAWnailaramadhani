@@ -1,8 +1,3 @@
-/* ==========================================================================
-   TUGASNAILA - PORTAL TUGAS KULIAH
-   Modern, Clean, Responsive Design System
-   ========================================================================== */
-
 :root {
   /* Color Palette */
   --primary-blue: #2563eb;
@@ -1350,9 +1345,6 @@ body {
   color: var(--text-muted);
 }
 
-/* ==========================================================================
-   9. RESPONSIVE DESIGN (HP & TABLET & LAPTOP)
-   ========================================================================== */
 
 /* Laptop & Desktop adjustments */
 @media (min-width: 1024px) {
