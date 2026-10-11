@@ -5,7 +5,7 @@ Website portal untuk pengelolaan dan pengumpulan tugas kuliah Pengembangan Aplik
 * Nama: Naila Ramadhani
 * NIM: 1247050026
 * Kelas: C
-* **Prodi**: Teknik Informatika - UIN Sunan Gunung Djati Bandung
+* Prodi: Teknik Informatika - UIN Sunan Gunung Djati Bandung
 
 ## Fitur
 * Tampilan daftar tugas per pertemuan
