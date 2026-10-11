@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TugasNaila — Portal Tugas Kuliah</title>
+  <meta name="description"
+    content="Portal Tugas Kuliah Naila Ramadhani - Pengumpulan dan monitoring tugas kuliah praktis dan responsif.">
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232563eb'><path d='M12 3L1 9l11 6 9-4.91V17h2V9L12 3zm0 12.5L3.5 10.9 12 6.27l8.5 4.63L12 15.5z'/></svg>">
+</head>
+
+<body>
+  <!-- Background Glow Accents -->
+  <div class="bg-blur-ambient bg-blur-1" aria-hidden="true"></div>
+  <div class="bg-blur-ambient bg-blur-2" aria-hidden="true"></div>
+
+  <!-- Header / Navbar -->
+  <header class="navbar-header" id="navbarHeader">
+    <div class="navbar-container">
+      <!-- Logo & Teks TugasNaila -->
+      <a href="#" class="brand-logo" id="brandLink">
+        <div class="logo-icon-wrapper">
+          <svg class="logo-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 3L2 8.5L12 14L22 8.5L12 3Z" fill="currentColor" />
+            <path d="M4 11.5V16.5C4 18.5 7.58 20.5 12 20.5C16.42 20.5 20 18.5 20 16.5V11.5L12 16L4 11.5Z"
+              fill="currentColor" fill-opacity="0.85" />
+          </svg>
+        </div>
+        <span class="brand-title">TugasNaila</span>
+      </a>
+
+      <!-- Navbar Action: Guest vs Admin -->
+      <nav class="navbar-actions" id="navbarActions">
+        <!-- Kondisi Tamu / Belum Login -->
+        <button type="button" class="btn-pill btn-admin-login" id="btnOpenLoginModal">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <span>Admin Login</span>
+        </button>
+
+        <!-- Kondisi Admin (Hidden by default, shown when logged in) -->
+        <div class="admin-action-group hidden" id="adminActionGroup">
+          <button type="button" class="btn-pill btn-add-task" id="btnOpenAddTaskModal">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>+ Tambah Tugas</span>
+          </button>
+          <button type="button" class="btn-pill btn-logout" id="btnLogout">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            <span>Logout</span>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Wrapper -->
+  <main class="main-layout" id="mainContent">
+    <div class="content-container">
+
+      <!-- Card Profile / Biodata -->
+      <section class="profile-card-wrapper" aria-label="Profil Mahasiswa">
+        <div class="profile-card">
+          <div class="profile-avatar-box">
+            <div class="avatar-letter">N</div>
+            <div class="avatar-status-dot" title="Aktif" aria-label="Status Online"></div>
+          </div>
+          <div class="profile-meta">
+            <h1 class="profile-name">Naila Ramadhani</h1>
+            <p class="profile-sub">NIM: 1247050026 &bull; Kelas: C</p>
+          </div>
+          <!-- Admin Status Indicator Pill -->
+          <div class="admin-indicator-badge hidden" id="adminBadge">
+            <span class="badge-dot"></span>
+            <span>Mode Admin Aktif</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section Kontrol Filter Pills -->
+      <section class="filter-section" aria-label="Filter Status Tugas">
+        <div class="filter-pills-row">
+          <button type="button" class="filter-pill active" data-filter="all" id="filterAll">
+            <span>Semua</span>
+            <span class="filter-count" id="countAll">0</span>
+          </button>
+          <button type="button" class="filter-pill" data-filter="completed" id="filterCompleted">
+            <span>Selesai</span>
+            <span class="filter-count" id="countCompleted">0</span>
+          </button>
+          <button type="button" class="filter-pill" data-filter="pending" id="filterPending">
+            <span>Belum</span>
+            <span class="filter-count" id="countPending">0</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Area Daftar Tugas (Grid & Empty State) -->
+      <section class="tasks-area-section" aria-label="Daftar Tugas Kuliah">
+        <!-- Grid Kartu Tugas -->
+        <div class="tasks-grid" id="tasksGrid">
+
+
+
+          <!-- Kartu Tugas Pertemuan 2 -->
+          <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-full">Pertemuan 2</span>
+                <span
+                  class="px-3 py-1 bg-emerald-50 text-emerald-600 text-xs font-medium rounded-full flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span> Selesai
+                </span>
+              </div>
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Membuat Halaman Profil Diri</h3>
+              <p class="text-gray-600 text-sm mb-6">Membuat halaman profil diri menggunakan HTML5</p>
+            </div>
+
+            <a href="./profil/index.html"
+              class="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl text-center text-sm transition inline-flex items-center justify-center gap-1.5">
+              Buka Tugas ↗
+            </a>
+          </div>
+
+          <!-- Kartu Pertemuan 3 -->
+          <article class="task-card" data-id="task-seed-3">
+            <div class="task-card-header">
+              <span class="badge-meeting">Pertemuan 3</span>
+              <span class="badge-status pending">
+                <span class="badge-status-dot"></span>
+                <span>Belum Dikerjakan</span>
+              </span>
+            </div>
+            <div class="task-card-body">
+              <h3 class="task-title">Implementasi API &amp; Basis Data Mahasiswa</h3>
+              <p class="task-description">Mengintegrasikan penyimpanan data lokal/API dan manajemen tugas dengan
+                validasi form lengkap.</p>
+            </div>
+            <div class="task-card-footer">
+              <a href="https://drive.google.com" target="_blank" rel="noopener noreferrer" class="btn-open-task">
+                <span>Buka Tugas ↗</span>
+              </a>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- Empty State (Jika belum ada tugas) -->
+        <div class="empty-state-card hidden" id="emptyStateCard">
+          <div class="empty-icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <h3 class="empty-title" id="emptyTitle">Belum Ada Tugas Ditambahkan</h3>
+          <p class="empty-desc" id="emptyDesc">Koleksi tugas kuliah yang diunggah oleh admin akan tersusun rapi di area
+            ini.</p>
+          <div class="empty-admin-action hidden" id="emptyAdminAction">
+            <button type="button" class="btn-pill btn-add-task" id="btnEmptyAddTask">
+              <span>+ Tambah Tugas Sekarang</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p class="footer-text">&copy; 2026 Portal Tugas &mdash; Naila Ramadhani</p>
+    </div>
+  </footer>
+
+  <!-- ======================================================== -->
+  <!-- MODAL 1: LOGIN ADMIN (Persis Spesifikasi Gambar Referensi) -->
+  <!-- ======================================================== -->
+  <dialog class="app-dialog" id="loginModal" closedby="any" aria-labelledby="loginTitle">
+    <div class="modal-card modal-card-sm">
+
+      <!-- Lock Icon Header -->
+      <div class="modal-lock-header">
+        <div class="lock-circle-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            <circle cx="12" cy="16" r="1"></circle>
+          </svg>
+        </div>
+        <h2 class="modal-title" id="loginTitle">Masuk Admin</h2>
+        <p class="modal-subtitle">Silakan masukkan password untuk mengelola tugas.</p>
+      </div>
+
+      <!-- Form Login -->
+      <form id="loginForm" class="modal-form" novalidate>
+        <div class="form-group">
+          <div class="input-password-wrapper">
+            <input type="password" id="adminPasswordInput" class="form-input input-admin-password"
+              placeholder="Masukkan Password..." autocomplete="current-password" required>
+            <button type="button" class="btn-toggle-eye" id="btnTogglePassword"
+              aria-label="Lihat / Sembunyikan Password">
+              <svg id="eyeOpenIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <svg id="eyeClosedIcon" class="hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+                </path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+            </button>
+          </div>
+          <!-- Error alert message -->
+          <p class="form-error-msg hidden" id="loginErrorMsg">Password salah. Silakan coba lagi.</p>
+          <div class="demo-credential-tip">
+            <span class="tip-badge">Tips Demo</span>
+            <span class="tip-text">Password default: <strong>admin123</strong></span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-action-primary btn-full" id="btnLoginSubmit">
+          <span>Login Sekarang</span>
+        </button>
+
+        <div class="modal-footer-nav">
+          <a href="#" class="nav-back-link" id="btnBackFromLogin">
+            &larr; Kembali ke Halaman Utama
+          </a>
+        </div>
+      </form>
+
+    </div>
+  </dialog>
+
+  <!-- ======================================================== -->
+  <!-- MODAL 2: TAMBAH TUGAS (Persis Spesifikasi Gambar Referensi) -->
+  <!-- ======================================================== -->
+  <dialog class="app-dialog" id="addTaskModal" closedby="any" aria-labelledby="addTaskTitle">
+    <div class="modal-card modal-card-md">
+
+      <!-- Modal Header -->
+      <div class="modal-header-simple">
+        <h2 class="modal-title" id="addTaskTitle">Tambah Tugas</h2>
+        <p class="modal-subtitle">Isi data tugas baru di bawah ini.</p>
+      </div>
+
+      <!-- Form Tambah Tugas -->
+      <form id="addTaskForm" class="modal-form" novalidate>
+
+        <!-- Pertemuan Ke- -->
+        <div class="form-group">
+          <label for="taskMeeting" class="form-label">Pertemuan Ke-</label>
+          <input type="text" id="taskMeeting" class="form-input" placeholder="Contoh: 1" required>
+        </div>
+
+        <!-- Judul Tugas -->
+        <div class="form-group">
+          <label for="taskTitle" class="form-label">Judul Tugas</label>
+          <input type="text" id="taskTitle" class="form-input" placeholder="Contoh: Membuat Website" required>
+        </div>
+
+        <!-- Deskripsi Singkat -->
+        <div class="form-group">
+          <label for="taskDesc" class="form-label">Deskripsi Singkat</label>
+          <textarea id="taskDesc" class="form-input form-textarea" rows="3" placeholder="Deskripsi tugas..."
+            required></textarea>
+        </div>
+
+        <!-- Status -->
+        <div class="form-group">
+          <label for="taskStatus" class="form-label">Status</label>
+          <div class="select-wrapper">
+            <select id="taskStatus" class="form-input form-select" required>
+              <option value="pending">Belum Dikerjakan</option>
+              <option value="completed">Selesai</option>
+            </select>
+            <div class="select-chevron">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pilih Metode Pengumpulan -->
+        <div class="form-group">
+          <label for="taskMethod" class="form-label">Pilih Metode Pengumpulan</label>
+          <div class="select-wrapper">
+            <select id="taskMethod" class="form-input form-select" required>
+              <option value="link">Kirim Link (Google Drive / Web)</option>
+              <option value="github">Repositori GitHub</option>
+              <option value="file">Upload File Dokumen</option>
+            </select>
+            <div class="select-chevron">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Input Group: Link Tugas (Default: Tampil saat Kirim Link / GitHub) -->
+        <div class="form-group" id="linkInputGroup">
+          <label for="taskLink" class="form-label" id="taskLinkLabel">Link Tugas</label>
+          <input type="url" id="taskLink" class="form-input" placeholder="https://..." required>
+        </div>
+
+        <!-- Input Group: Upload Dokumen (Tampil saat memilih Upload File Dokumen) -->
+        <div class="form-group hidden" id="fileInputGroup">
+          <label class="form-label">Pilih File Dokumen</label>
+          <div class="file-upload-dropzone" id="fileDropzone">
+            <input type="file" id="taskFileInput" class="file-input-hidden"
+              accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.zip,.rar,.png,.jpg,.jpeg,.txt">
+            <div class="file-upload-prompt" id="fileUploadPrompt">
+              <div class="upload-icon-circle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+              </div>
+              <span class="upload-text-main">Pilih File dari Perangkat</span>
+              <span class="upload-text-sub">Format PDF, Word, PPT, ZIP, Gambar (Maks. 5MB)</span>
+            </div>
+
+            <!-- Tampilan Info File yang Telah Dipilih -->
+            <div class="file-chosen-preview hidden" id="fileChosenPreview">
+              <div class="file-preview-left">
+                <div class="file-badge-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                  </svg>
+                </div>
+                <div class="file-preview-meta">
+                  <span class="file-name" id="chosenFileName">dokumen.pdf</span>
+                  <span class="file-size" id="chosenFileSize">0 KB</span>
+                </div>
+              </div>
+              <button type="button" class="btn-remove-file" id="btnRemoveFile" title="Ganti Berkas"
+                aria-label="Ganti Berkas">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tombol Bawah: Batal & Simpan Tugas -->
+        <div class="modal-form-actions">
+          <button type="button" class="btn-action-soft" id="btnCancelAddTask">
+            Batal
+          </button>
+          <button type="submit" class="btn-action-dark" id="btnSaveTask">
+            Simpan Tugas
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </dialog>
+
+  <!-- ======================================================== -->
+  <!-- MODAL 3: KONFIRMASI HAPUS TUGAS                          -->
+  <!-- ======================================================== -->
+  <dialog class="app-dialog" id="deleteConfirmModal" closedby="any" aria-labelledby="deleteTitle">
+    <div class="modal-card modal-card-sm text-center">
+      <div class="delete-icon-circle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <polyline points="3 6 5 6 21 6"></polyline>
+          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          <line x1="10" y1="11" x2="10" y2="17"></line>
+          <line x1="14" y1="11" x2="14" y2="17"></line>
+        </svg>
+      </div>
+      <h3 class="modal-title" id="deleteTitle">Hapus Tugas Ini?</h3>
+      <p class="modal-subtitle" id="deleteConfirmDesc">Apakah Anda yakin ingin menghapus tugas ini? Tindakan ini tidak
+        dapat dibatalkan.</p>
+
+      <div class="modal-form-actions modal-delete-actions">
+        <button type="button" class="btn-action-soft" id="btnCancelDelete">Batal</button>
+        <button type="button" class="btn-action-danger" id="btnConfirmDelete">Ya, Hapus</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- JavaScript Application -->
+  <script src="app.js"></script>
+</body>
+
+</html>
